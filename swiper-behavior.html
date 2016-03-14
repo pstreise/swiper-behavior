@@ -1,6 +1,6 @@
 <link rel="import" href="../polymer/polymer.html">
 
-<link rel="stylesheet" href="../swiper/dist/css/swiper.min.css">
+<link rel="import" href="swiper-styles.html">
 <script src="../swiper/dist/js/swiper.min.js"></script>
 
 <script>
@@ -9,31 +9,65 @@
   /**
    * SwiperBehavior helps integrate the Swiper library within a Polymer
    * component. In order to use it:
-   *   1. Add the behavior to the custom component. Eg (from Swiper website):
-   *         <!-- Slider main container -->
-   *          <div id="swiperContainer"  class="swiper-container">
-   *              <!-- Additional required wrapper -->
-   *              <div class="swiper-wrapper">
-   *                  <!-- Slides -->
-   *                  <div class="swiper-slide">Slide 1</div>
-   *                  <div class="swiper-slide">Slide 2</div>
-   *                  <div class="swiper-slide">Slide 3</div>
-   *              </div>
-   *              <!-- If we need pagination -->
-   *              <div class="swiper-pagination"></div>
+   * * Add the behavior to the custom component. Eg (from Swiper website):
    *
-   *              <!-- If we need navigation buttons -->
-   *              <div class="swiper-button-prev"></div>
-   *              <div class="swiper-button-next"></div>
+   *         <link rel="import" href="path/to/swiper-behavior.html">
    *
-   *              <!-- If we need scrollbar -->
-   *              <div class="swiper-scrollbar"></div>
-   *          </div>
+   * * Import the swiper styles in your component
    *
-   *   2. Add swiper markup within the component. Make sure that the container
-   *       DOM element has `id='swiperContainer'`.
+   *         <style include="swiper-styles"></style>
    *
-   *   3. Customise the swiperOpts object (http://idangero.us/swiper/api/)
+   * * Add swiper markup within the component. Make sure that the container
+   *     DOM element has `id='swiperContainer'`, the pagination container has
+   *     `id='swiperPagination'` and the prev/next buttons have `id='swiperPrev'`
+   *     and `id='swiperNext'`.
+   *
+   *
+   *         <div id="swiperContainer"  class="swiper-container">
+   *           <div class="swiper-wrapper">
+   *               <!-- Slides -->
+   *               <template is="dom-repeat" items="{{slidesData}}">
+   *                 <div class="swiper-slide">{{item}}</div>
+   *               </template>
+   *           </div>
+   *           <!-- If we need pagination -->
+   *           <div class="swiper-pagination" id="swiperPagination"></div>
+   *
+   *           <!-- If we need navigation buttons -->
+   *           <div class="swiper-button-prev" id="swiperPrev"></div>
+   *           <div class="swiper-button-next" id="swiperNext"></div>
+   *         </div>
+   *
+   * * Customise the swiperOpts object (http://idangero.us/swiper/api/). You
+   *     **don't** need to specify the `pagination`, `prevButton` and `nextButton`
+   *     options, because they will be parsed automatically via their IDs by
+   *     the behavior.
+   *
+   *         properties: {
+   *           swiperOpts: {
+   *             type: Object,
+   *             value: {
+   *               paginationClickable: true,
+   *               slidesPerView: 4,
+   *               spaceBetween: 40,
+   *               breakpoints: {
+   *                 320: {
+   *                   slidesPerView: 1,
+   *                   spaceBetweenSlides: 10
+   *                 },
+   *                 480: {
+   *                   slidesPerView: 2,
+   *                   spaceBetweenSlides: 20
+   *                 },
+   *                 640: {
+   *                   slidesPerView: 3,
+   *                   spaceBetweenSlides: 30
+   *                 }
+   *               }
+   *             }
+   *           }
+   *         }
+   *
    *
    * After the .ready() event, properties can be added/updated by using the
    * 'setSwiperOption' method.
@@ -50,6 +84,11 @@
    * the argument of
    *
    *     {1024: {spaceBetween: 40}}
+   *
+   *
+   * There is a known bug: the `prev` and `next` buttons background image is not
+   * parsed correctly. You'll need to provide a custom solution for that (as in
+   * the demo).
    *
    * @demo demo/index.html
    * @polymerBehavior
@@ -167,6 +206,23 @@
       if (this.swiper) {
         this.swiper.destroy(true, true);
         this.initSwiper();
+      }
+    },
+
+    ready: function() {
+
+      // Pagination: swiper hook + sopeSubtree
+      if (this.$.swiperPagination) {
+        this.swiperOpts.pagination = this.$.swiperPagination;
+        this.scopeSubtree(this.$.swiperPagination, true);
+      }
+
+      // Prev / next buttons swiper hook
+      if (this.$.swiperPrev) {
+        this.swiperOpts.prevButton = this.$.swiperPrev;
+      }
+      if (this.$.swiperNext) {
+        this.swiperOpts.nextButton = this.$.swiperNext;
       }
     },
 
