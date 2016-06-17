@@ -189,28 +189,8 @@
       this.set('swiperOpts.' + optionName, optionValue);
     },
 
-    /**
-     * Initialises the Swiper object with the specified options. Make sure that
-     * DOM element containing the Swiper carousel has  id='swiperContainer'.
-     */
-    initSwiper: function() {
-      if (this.$.swiperContainer) {
-        this.swiper = new Swiper(this.$.swiperContainer, this.swiperOpts);
-      }
-    },
-
-    /**
-     * Re-initialises swiper using the current options.
-     */
-    resetSwiper: function() {
-      if (this.swiper) {
-        this.swiper.destroy(true, true);
-        this.initSwiper();
-      }
-    },
-
-    ready: function() {
-
+    /** Set Pagination and Arrows if elements available */
+    setScrollingControls: function() {
       // Pagination: swiper hook + sopeSubtree
       if (this.$.swiperPagination) {
         this.swiperOpts.pagination = this.$.swiperPagination;
@@ -223,6 +203,27 @@
       }
       if (this.$.swiperNext) {
         this.swiperOpts.nextButton = this.$.swiperNext;
+      }
+    },
+
+    /**
+     * Initialises the Swiper object with the specified options. Make sure that
+     * DOM element containing the Swiper carousel has  id='swiperContainer'.
+     */
+    initSwiper: function() {
+      if (this.$.swiperContainer) {
+        this.setScrollingControls();
+        this.swiper = new Swiper(this.$.swiperContainer, this.swiperOpts);
+      }
+    },
+
+    /**
+     * Re-initialises swiper using the current options.
+     */
+    resetSwiper: function() {
+      if (this.swiper) {
+        this.swiper.destroy(true, true);
+        this.initSwiper();
       }
     },
 
