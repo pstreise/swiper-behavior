@@ -206,7 +206,7 @@
     },
 
     /** Set Pagination and Arrows if elements available */
-    setScrollingControls: function() {
+    _setScrollingControls: function() {
       // Pagination: swiper hook + sopeSubtree
       if (this.$.swiperPagination) {
         this.swiperOpts.pagination = this.$.swiperPagination;
@@ -228,7 +228,7 @@
      */
     initSwiper: function() {
       if (this.$.swiperContainer) {
-        this.setScrollingControls();
+        this._setScrollingControls();
         this.swiper = new Swiper(this.$.swiperContainer, this.swiperOpts);
         this._setInitialised(true);
       }
