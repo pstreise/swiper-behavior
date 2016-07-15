@@ -7,6 +7,8 @@
   window.XBehaviors = window.XBehaviors || {};
 
   /**
+   * 
+   * ### Setup
    * SwiperBehavior helps integrate the Swiper library within a Polymer
    * component. In order to use it:
    * * Add the behavior to the custom component. Eg (from Swiper website):
@@ -68,6 +70,8 @@
    *           }
    *         }
    *
+   * 
+   * ### Setting Swiper properties and listening to changes
    *
    * After the .ready() event, properties can be added/updated by using the
    * 'setSwiperOption' method.
@@ -86,7 +90,19 @@
    *     {1024: {spaceBetween: 40}}
    *
    *
-   * There is a known bug: the `prev` and `next` buttons background image is not
+   * ### Lazy initialisation
+   * By default, the Swiper library will be called to initialised the carousel when
+   * the element gets attached to the DOM. This behaviour can be disabled by setting
+   * the `disableAutoInit` property to `true`. The developer becomes responsible for
+   * the carousel initialisation by caling `initSwiper()`.
+   *
+   * *Note: even if not initialised, the carousel will still appear in the page and 
+   * look broken*. You can use the `initialised` attribute to style the carousel
+   * (e.g by showing/hiding - see demo).
+   *
+   *
+   * ### Known bugs
+   * - the `prev` and `next` buttons background image is not
    * parsed correctly. You'll need to provide a custom solution for that (as in
    * the demo).
    *
