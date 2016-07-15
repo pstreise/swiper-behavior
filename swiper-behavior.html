@@ -245,6 +245,18 @@
     },
 
     /**
+     * Destroys swiper and sets its reference to null.
+     */
+    destroySwiper: function() {
+      if (this.swiper) {
+        this.swiper.detachEvents();
+        this.swiper.destroy(true, true);
+        this.swiper = null;
+        this._setInitialised(false);
+      }
+    },
+
+    /**
      * Initialises the plugin when the component is ready.
      */
     attached: function() {
@@ -259,11 +271,7 @@
      * Detaches swiper events and destroys swiper instance.
      */
     detached: function() {
-      if (this.swiper) {
-        this.swiper.detachEvents();
-        this.swiper.destroy(true, true);
-        this.swiper = null;
-      }
+      this.destroySwiper();
     }
   };
 </script>
