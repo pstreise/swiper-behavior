@@ -12,6 +12,13 @@
       :host {
         display: block;
         box-sizing: border-box;
+        
+        opacity: 0;
+        transition: opacity 1s ease;
+      }
+
+      :host([initialised]) {
+        opacity: 1;
       }
 
       .swiper-container {
