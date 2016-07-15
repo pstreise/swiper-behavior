@@ -11,6 +11,5 @@ within a Polymer component.
 
 ## Documentation and demo
 
-1. Install polyserve: `npm install -g polyserve`
-2. Run `polyserve` in the Swiper Behaviour folder
-3. Open `http://localhost:8080/components/swiper-behavior/` in your browser
+1. Install Polymer CLI: `npm install -g polymer`
+2. Run `polymer serve --open` in the Swiper Behaviour folder
