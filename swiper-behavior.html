@@ -99,6 +99,22 @@
       /** Reference to the swiper object. */
       swiper: Object,
 
+      /**
+       * Set to true in order to disable initialisation of Swiper on attached.
+       * The developer takes the responsibility of initialising Swiper by calling
+       */
+      disableAutoInit: {
+        type: Boolean,
+        value: false
+      },
+
+      initialised: {
+        type: Boolean,
+        reflectToAttribute: true,
+        readOnly: true,
+        value: false
+      },
+
       /** Swiper options. http://idangero.us/swiper/api/ */
       swiperOpts: {
         type: Object,
@@ -214,6 +230,7 @@
       if (this.$.swiperContainer) {
         this.setScrollingControls();
         this.swiper = new Swiper(this.$.swiperContainer, this.swiperOpts);
+        this._setInitialised(true);
       }
     },
 
@@ -231,9 +248,11 @@
      * Initialises the plugin when the component is ready.
      */
     attached: function() {
-      this.async(function() {
-        this.initSwiper();
-      });
+      if (!this.disableAutoInit) {
+        Polymer.RenderStatus.afterNextRender(this, function() {
+          this.initSwiper();
+        });
+      }
     },
 
     /**
