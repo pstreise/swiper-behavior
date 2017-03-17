@@ -1,3 +1,5 @@
+[![Published on webcomponents.org](https://img.shields.io/badge/webcomponents.org-published-blue.svg?style=flat-square)](https://www.webcomponents.org/element/ciampo/swiper-behavior)
+
 ## &lt;swiper-behavior&gt;
 
 **Polymer** behavior. Use `<swiper-behavior>` to integrate the Swiper library
