@@ -245,6 +245,7 @@
     initSwiper: function() {
       if (this.$.swiperContainer) {
         this._setScrollingControls();
+        this.swiperOpts.currentComponent = this;
         this.swiper = new Swiper(this.$.swiperContainer, this.swiperOpts);
         this._setInitialised(true);
       }
